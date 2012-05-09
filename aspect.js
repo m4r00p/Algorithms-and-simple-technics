@@ -1,3 +1,8 @@
+/**
+ * Aspect library made by Marek Pawlowski. (marek@pawlowski.it)
+ *
+ * @link https://github.com/m4r00/Algorithms-and-simple-technics/
+ */
 var aspect = (function () {
     var out = {};
 
