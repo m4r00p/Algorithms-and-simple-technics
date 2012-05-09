@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Split time</title>
+</head>
+<body>
+    <div id="resultmsg"></div>
+    <button id="sendmsg" >click</button>
+    <script type="text/javascript" charset="utf-8">
+        (function (w, d, undefined) {
+            
+
+         var processArray = function (arr, process, callback) {
+            var arrCopy = arr.slice();
+            var delay   = 10; //ms
+            
+            setTimeout(function () {
+                var start = Date.now();
+
+                while (arrCopy.length && (Date.now() - start < delay)) {
+                    process(arrCopy.shift()); 
+                }
+
+                if (arrCopy.length) {
+                    setTimeout(arguments.callee, delay);    
+                } else {
+                    callback(arr);
+                }
+                
+            }, delay); 
+         };
+
+         var data = [
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+             0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+         ];
+
+         var process = function (n) {
+            var i = 1e6;
+
+            while (i--) {}
+
+            return n;
+         };
+
+         d.getElementById('sendmsg').onclick = function () {
+             processArray(data, process, function (time, data) {
+                d.getElementById('resultmsg').innerHTML += " time: " + (Date.now() - time) + "ms<br />";
+             }.bind(null, Date.now()));
+         };
+
+        }(window, document));
+    </script>
+</body>
+</html>

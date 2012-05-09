@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Web worker</title>
+</head>
+<body>
+    <div id="resultmsg"></div>
+    <button id="sendmsg" >click</button>
+    <script type="text/javascript" charset="utf-8">
+        (function (w, d, undefined) {
+            var iteration = 0, worker = new Worker('worker-fib.js');
+
+            worker.onmessage = function (event) {
+                d.getElementById('resultmsg').innerHTML += event.data + "<br />";
+            };
+
+            d.getElementById('sendmsg').onclick = function () {
+                worker.postMessage(JSON.stringify([
+                    40,
+                    iteration,
+                    Date.now()
+                ]));
+                iteration += 1;
+            };
+
+        }(window, document));
+    </script>
+
+</body>
+</html>

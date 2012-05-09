@@ -27,6 +27,7 @@ Function.prototype.saturate = function () {
 
 
 // curry arguments 
+
 Function.prototype.curry = function () {
     var that = this;
     var args = Array.prototype.slice.call(arguments);
@@ -38,9 +39,6 @@ Function.prototype.curry = function () {
     return fn;
 };
 
-var a = function (b, c) {
-   print(b + ' ' + c); 
-};
 
 //combo
 a.bind(null, "Wawa to").curry("Raga muffin").saturate()();

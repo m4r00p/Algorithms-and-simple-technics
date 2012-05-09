@@ -1,6 +1,9 @@
 var aspect = (function () {
     var out = {};
 
+    /**
+     * @private
+     */
     var __checkAndExecute = function (obj, fn, aspectFn, when, once, callback) {
         var i, len, typeFn = Object.prototype.toString.call(fn);
 
@@ -27,6 +30,9 @@ var aspect = (function () {
         }
     };
 
+    /**
+     * @private
+     */
     var __executeAspects = function (obj, fn, aspects, when) {
         var i, len, aspectFn;
 
@@ -44,6 +50,35 @@ var aspect = (function () {
     };
 
     
+    /**
+     * Adds aspect function to the object method(s).
+     *
+     * @example
+     * var obj = { 
+     *   pow2: function (y) {
+     *     return Math.pow(2, y);
+     *   },
+     *   pow10: function (y) { 
+     *     return Math.pow(10, y);
+     *   }
+     * }
+     *
+     * aspect.add(obj, 'pow10', function () { alert('Executed each time before orginal method.'); });
+     * aspect.add(obj, 'pow10', function () { alert('Executed each time after orginal method.'); }, 'after');
+     * aspect.add(obj, 'pow10', function () { alert('Executed one time after orginal method.'); }, 'after', true);
+     *
+     * aspect.add(obj, ['pow10', 'pow2'], function () { alert('Executed each time before orginal methods which are define in array'); });
+     * aspect.add(obj, /^pow.*$/gi, function () { alert('Executed each time before orginal methods which name match regexp.'); });
+     *
+     *
+     *
+     * @param {Object} obj - object in which function will be decorated 
+     * @param {String|Array|RegExp} fn - method to decorete identifier
+     * @param {Function} aspectFn - function which will decorate orginal method from object
+     * @param {String|undefined} when - moment in which aspect function should be executed ('before'/'after')
+     *                                  in order to orginal one. (default is 'before');
+     * @param {Boolean} once - if given aspect function shoulbe executed only once and then removed.
+     */
     out.add = function (obj, fn, aspectFn, when, once) {
         var that   = this;
 
@@ -79,6 +114,19 @@ var aspect = (function () {
         return this;
     };
 
+    /**
+     * Removes asspect function from object method(s).
+     *
+     * @example
+     *
+     * aspect.remove(obj, 'pow10', fn);
+     * 
+     * @param {Object} obj - object in which function will be decorated 
+     * @param {String|Array|RegExp} fn - method to decorete identifier
+     * @param {Function} aspectFn - function which will decorate orginal method from object
+     * @param {String|undefined} when - moment in which aspect function should be executed ('before'/'after')
+     *                                  in order to orginal one. (default is 'before');
+     */
     out.remove = function(obj, fn, aspectFn, when) {
         var aspects;
 
@@ -101,6 +149,7 @@ var aspect = (function () {
             }
         }
     };
+
 
     return out;
 }());
