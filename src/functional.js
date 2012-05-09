@@ -1,4 +1,3 @@
-
 // bind context and args to funciton 
 Function.prototype.bind = function (ctx /* ... */) {
     var that = this;
@@ -10,8 +9,6 @@ Function.prototype.bind = function (ctx /* ... */) {
 
     return fn;
 };
-
-
 
 // saturate funciton
 Function.prototype.saturate = function () {
@@ -25,9 +22,7 @@ Function.prototype.saturate = function () {
     return fn;
 };
 
-
 // curry arguments 
-
 Function.prototype.curry = function () {
     var that = this;
     var args = Array.prototype.slice.call(arguments);
@@ -39,6 +34,26 @@ Function.prototype.curry = function () {
     return fn;
 };
 
+// memoizes execution
+Function.prototype.memoize = function () {
+    var memo = {};
+    var that = this;
 
-//combo
-a.bind(null, "Wawa to").curry("Raga muffin").saturate()();
+    var fn =  function () {
+        var args = Array.prototype.slice.call(arguments);
+        var item = memo[args] || (memo[args] = that.apply(null, args))
+
+        return item;  
+    };
+
+    fn.unmemoize = function () {
+        return that; 
+    };
+
+    return fn;
+};
+
+// Throw exeception if function was not memoize previously
+Function.prototype.unmemoize = function () {
+    throw new Error("This function wasn't memoize before!!!");
+};

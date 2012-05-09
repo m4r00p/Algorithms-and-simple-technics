@@ -44,8 +44,6 @@ iteration = 0;
 print("fibMemo(45): " + fibMemo(45, [1, 1]) + " iteration: " + iteration);
 // Awsome isn't it?
 
-
-
 // Maybe messing with prototype isn't right way...
 Function.prototype.memoize = function () {
     var memo = {};
